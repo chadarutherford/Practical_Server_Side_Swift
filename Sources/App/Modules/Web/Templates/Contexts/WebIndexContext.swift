@@ -9,10 +9,8 @@ import Foundation
 
 public struct WebIndexContext {
     public let title: String
-    public let message: String
     
-    public init(title: String, message: String) {
+    public init(title: String) {
         self.title = title
-        self.message = message
     }
 }
