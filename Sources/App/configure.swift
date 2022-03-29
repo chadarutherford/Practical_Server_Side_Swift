@@ -21,10 +21,7 @@ public func configure(_ app: Application) throws {
     // Use the Public directory to serve public files
      app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
-    // register routes
-    app.routes.get("hello") { req -> Response in
-        req.templates.renderHtml(MyTemplate(title: "Hello, Vapor4 - from PSSS!"))
-    }
-    
-    try routes(app)
+    // Setup web routes
+    let router = WebRouter()
+    try router.boot(routes: app.routes)
 }

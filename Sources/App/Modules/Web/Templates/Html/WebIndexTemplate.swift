@@ -11,6 +11,7 @@ import SwiftHtml
 import SwiftSvg
 
 public struct WebIndexTemplate: TemplateRepresentable {
+    
     public var context: WebIndexContext
     var body: Tag
     
@@ -39,7 +40,6 @@ public struct WebIndexTemplate: TemplateRepresentable {
                 
                 Title(context.title)
             }
-            
             Body {
                 Header {
                     Div {
@@ -54,13 +54,12 @@ public struct WebIndexTemplate: TemplateRepresentable {
                                 .type(.checkbox)
                                 .id("primary-menu-button")
                                 .name("menu-button")
-                                .class("menu_button")
+                                .class("menu-button")
                             Label {
                                 Svg.menuIcon()
                             }
                             .for("primary-menu-button")
-                                    
-                            Div {
+                                    Div {
                                 A("Home")
                                     .href("/")
                                     .class("selected", req.url.path == "/")
@@ -102,10 +101,12 @@ public struct WebIndexTemplate: TemplateRepresentable {
                 Script()
                     .type(.javascript)
                     .src("/js/web.js")
+                
             }
         }
         .lang("en-US")
     }
+    
 }
 
 extension Svg {
