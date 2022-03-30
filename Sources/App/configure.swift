@@ -1,20 +1,6 @@
 import Vapor
-import SwiftHtml
-
-struct MyTemplate: TemplateRepresentable {
-    let title: String
-    
-    func render(_ req: Request) -> Tag {
-        Html {
-            Head {
-                Title(title)
-            }
-            Body {
-                H1(title)
-            }
-        }
-    }
-}
+import Fluent
+import FluentSQLiteDriver
 
 // configures your application
 public func configure(_ app: Application) throws {
@@ -23,6 +9,10 @@ public func configure(_ app: Application) throws {
     
     /// extend paths to always contain a trailing slash
     app.middleware.use(ExtendPathMiddleware())
+    
+    /// Sretup Fluent with SQLite Database under the Resources directory
+    let dbPath = app.directory.resourcesDirectory + "db.sqlite"
+    app.databases.use(.sqlite(.file(dbPath)), as: .sqlite)
 
     /// Setup module routes
     let routers: [RouteCollection] = [
