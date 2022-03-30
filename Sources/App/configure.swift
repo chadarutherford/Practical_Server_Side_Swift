@@ -10,6 +10,11 @@ public func configure(_ app: Application) throws {
     /// extend paths to always contain a trailing slash
     app.middleware.use(ExtendPathMiddleware())
     
+    /// Setup Sessions
+    app.sessions.use(.fluent)
+    app.migrations.add(SessionRecord.migration)
+    app.middleware.use(app.sessions.middleware)
+    
     /// Sretup Fluent with SQLite Database under the Resources directory
     let dbPath = app.directory.resourcesDirectory + "db.sqlite"
     app.databases.use(.sqlite(.file(dbPath)), as: .sqlite)
@@ -17,6 +22,7 @@ public func configure(_ app: Application) throws {
     /// Setup modules
     let modules: [ModuleInterface] = [
         WebModule(),
+        UserModule(),
         BlogModule()
     ]
     
