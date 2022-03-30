@@ -69,6 +69,14 @@ public struct WebIndexTemplate: TemplateRepresentable {
                                 A("About")
                                     .href("#")
                                     .onClick("javascript:about();")
+                                
+                                if req.auth.has(AuthenticatedUser.self) {
+                                    A("Sign Out")
+                                        .href("/sign-out/")
+                                } else {
+                                    A("Sign In")
+                                        .href("/sign-in/")
+                                }
                             }
                             .class("menu-items")
                         }

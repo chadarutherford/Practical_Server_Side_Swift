@@ -15,5 +15,6 @@ struct UserRouter: RouteCollection {
         routes
             .grouped(UserCredentialsAuthenticator())
             .post("sign-in", use: frontendController.signInAction)
+        routes.get("sign-out", use: frontendController.signOut)
     }
 }

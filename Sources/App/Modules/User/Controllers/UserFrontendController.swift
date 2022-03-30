@@ -41,4 +41,10 @@ struct UserFrontendController {
         let input = try req.content.decode(Input.self)
         return renderSignInView(req, input, "Invalid email or password.")
     }
+    
+    func signOut(req: Request) throws -> Response {
+        req.auth.logout(AuthenticatedUser.self)
+        req.session.unauthenticate(AuthenticatedUser.self)
+        return req.redirect(to: "/")
+    }
 }
