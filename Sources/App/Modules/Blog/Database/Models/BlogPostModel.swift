@@ -8,7 +8,9 @@
 import Fluent
 import Vapor
 
-final class BlogPostModel: Model {
+final class BlogPostModel: DatabaseModelInterface {
+    typealias Module = BlogModule
+    
     static let schema = "blog_posts"
     
     struct FieldKeys {

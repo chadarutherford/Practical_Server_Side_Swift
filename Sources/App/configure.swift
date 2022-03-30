@@ -14,14 +14,17 @@ public func configure(_ app: Application) throws {
     let dbPath = app.directory.resourcesDirectory + "db.sqlite"
     app.databases.use(.sqlite(.file(dbPath)), as: .sqlite)
 
-    /// Setup module routes
-    let routers: [RouteCollection] = [
-        WebRouter(),
-        BlogRouter()
+    /// Setup modules
+    let modules: [ModuleInterface] = [
+        WebModule(),
+        BlogModule()
     ]
     
     /// Boot Routes
-    for router in routers {
-        try router.boot(routes: app.routes)
+    for module in modules {
+        try module.boot(app)
     }
+    
+    /// Use automatic database migration
+    try app.autoMigrate().wait()
 }
