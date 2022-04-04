@@ -1,6 +1,8 @@
 import Vapor
 import Fluent
 import FluentSQLiteDriver
+import Liquid
+import LiquidLocalDriver
 
 // configures your application
 public func configure(_ app: Application) throws {
@@ -18,6 +20,12 @@ public func configure(_ app: Application) throws {
     /// Sretup Fluent with SQLite Database under the Resources directory
     let dbPath = app.directory.resourcesDirectory + "db.sqlite"
     app.databases.use(.sqlite(.file(dbPath)), as: .sqlite)
+    
+    /// Setup Liquid using the local file storage driver
+    app.fileStorages.use(.local(publicUrl: "http://localhost:8080", publicPath: app.directory.publicDirectory, workDirectory: "assets"), as: .local)
+    
+    /// Set the max file upload limit
+    app.routes.defaultMaxBodySize = "10mb"
 
     /// Setup modules
     let modules: [ModuleInterface] = [
