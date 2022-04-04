@@ -38,7 +38,9 @@ struct UserFrontendController {
         /// If the user credentials were wrong we render the form again with an error message
         let form = UserLoginForm()
         try await form.process(req: req)
-        form.error = "Invalid email or password"
+        if try await form.validate(req: req) {   
+            form.error = "Invalid email or password"
+        }
         return renderSignInView(req, form)
     }
     
